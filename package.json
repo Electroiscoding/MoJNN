@@ -1,1 +1,13 @@
-
+{
+  "name": "mojnn-1",
+  "version": "1.0.0",
+  "description": "MoJNN-1: A uniquely different JavaScript Neural Network sentiment classifier built with brain.js.",
+  "main": "main.js",
+  "scripts": {
+    "start": "open index.html"
+  },
+  "dependencies": {
+    "brain.js": "^2.0.0"
+  },
+  "author": "Phase Technologies"
+}
