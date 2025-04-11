@@ -26,7 +26,7 @@
 
 ## Roadmap
 
-- [ ] Basic sentiment classification
+- [x] Basic sentiment classification
 - [ ] Better training data and preprocessing
 - [ ] Real-time web demo
 - [ ] Expand to support other languages
