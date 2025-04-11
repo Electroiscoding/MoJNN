@@ -1,1 +1,5 @@
-
+{
+  "learningRate": 0.01,
+  "iterations": 200,
+  "errorThreshold": 0.005
+}
