@@ -1,27 +1,26 @@
-// Make sure brain.js is already loaded on the page (via CDN in index.html)
-
-class Classifier {
+// classifier.js
+export class Classifier {
   constructor() {
-    // Create a new neural network instance
+    // Create a new neural network using brain.js
     this.net = new brain.NeuralNetwork();
-
-    // Optionally, you could load training data dynamically
-    // For example, if trainingData is available globally (from trainingData.json)
-    if (typeof TRAINING_DATA !== 'undefined') {
-      this.net.train(TRAINING_DATA, {
-        iterations: 200,
-        errorThresh: 0.005,
-      });
-    }
   }
 
+  // Train the neural network using training data.
+  // Training data should be an array of objects with `input` and `output` keys.
+  train(trainingData) {
+    this.net.train(trainingData, {
+      iterations: 200,
+      errorThresh: 0.005,
+      log: true,
+      logPeriod: 50,
+    });
+  }
+
+  // Classify a preprocessed input (bag-of-words object)
   classify(input) {
-    // Run the network on the preprocessed input
     const output = this.net.run(input);
-    
-    // Example: Assume output is an object with keys: positive, negative, neutral
-    // and we choose the highest value as the prediction.
     let sentiment = 'Neutral';
+    // Choose the key with the highest value
     const keys = Object.keys(output);
     if (keys.length) {
       let highestKey = keys[0];
@@ -35,24 +34,17 @@ class Classifier {
     return sentiment;
   }
 
-  loadModel() {
-    // Load a pre-trained model if available from a global variable MODEL_DATA.
-    // MODEL_DATA should be an object from model.json loaded via a script tag or AJAX.
-    if (typeof MODEL_DATA !== 'undefined' && Object.keys(MODEL_DATA).length > 0) {
-      this.net.fromJSON(MODEL_DATA);
-    }
+  // Load a pre-trained model from JSON data
+  loadModel(modelData) {
+    this.net.fromJSON(modelData);
   }
 
+  // Export the current model as a JSON object
   exportModel() {
-    // Export the current model as JSON (for saving to model.json)
     return this.net.toJSON();
   }
-  
-  // Utility method to capitalize sentiment names
+
+  // Utility to capitalize a word
   capitalize(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
-}
-
-// Expose the Classifier class globally
-window.Classifier = Classifier;
